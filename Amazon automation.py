@@ -13,11 +13,12 @@ import selenium.webdriver.support.ui as ui
 from selenium.webdriver.common.keys import Keys
 
 ignored_exceptions = (NoSuchElementException,StaleElementReferenceException,)
-
-driver = webdriver.Chrome(ChromeDriverManager().install())
+options = webdriver.ChromeOptions() 
+options.add_experimental_option("excludeSwitches", ["enable-logging"])
+driver = webdriver.Chrome(ChromeDriverManager().install(),options=options)
 driver.get('https://www.amazon.com/')
 driver.maximize_window()
-driver.implicitly_wait(15)
+driver.implicitly_wait(10)
 wait = WebDriverWait(driver, 10)
 item = input(str("Enter the item you want to search: \n".replace('/','')))
 
@@ -54,14 +55,13 @@ def find_product(option):
 def product_click(): # this function clicks on every other image within the results page and clicks items into new tabs to be viewed by user
     
     elems = driver.find_elements_by_xpath("""//img[@src]""")
-    # elems = driver.find_elements_by_xpath("//div[@data-asin]")
     i = 1
     cw = driver.current_window_handle
-    for elem in elems[i:14:2]:    
-        try:  
+    for elem in elems[i:30:i+2]:    
+        try:   
             tw = ActionChains(driver).context_click(elem).key_down(Keys.CONTROL).click(elem).perform()
             time.sleep(0.8)
-            i += 1
+            i += 2
         except StaleElementReferenceException:
             continue
 
@@ -73,7 +73,7 @@ def review_tabs(result_tab,open_tabs): # this function reviews each tab that is 
         if open_tabs[x] != result_tab:
             driver.switch_to.window(open_tabs[x])
             driver.execute_script("window.scrollTo (0, 540)")
-            time.sleep(0.8)
+            time.sleep(1.5)
             driver.close()
         else:
             driver.close()
