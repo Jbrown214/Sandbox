@@ -4,6 +4,8 @@ import json
 import requests
 import pandas as pd
 import openpyxl
+from numpy import sqrt
+from numpy import average as avg
 
 
 # The code below requests user input to look into the area of interest of real-estate property
@@ -85,7 +87,14 @@ def query_data(bath, bedrooms,p_code, sq_feet, c, s, zip_func, distance=1): # th
 def compose_dataframe(info): # function stores all of the retrieved data of housing information into an excel spreadsheet
     df = pd.DataFrame(data=info)
     df['Average House Price'] = df['Prices'].mean(axis=0)
+    df['Variance'] = df['Prices'] - df['Average House Price']
+    df['Variance'] =df['Variance'] **2
+    # df['Variance'] =df['Variance'].astype(float)
+    std_dev = sqrt(df['Variance'])
+    df['Overall Std. Deviation'] = avg(std_dev)
     df['Average House Price'] = df['Average House Price'].astype(int).drop_duplicates()
+    df['Overall Std. Deviation'] = df['Overall Std. Deviation'].astype(int).drop_duplicates()
+    
     df.to_excel (r'''C:\\Users\\Jacks\\OneDrive\\Desktop\\Python projects\\Api Excel_output.xlsx''', index = False, header=True)
     return df
 
