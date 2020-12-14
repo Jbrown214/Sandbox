@@ -57,7 +57,7 @@ def product_click(): # this function clicks on every other image within the resu
     elems = driver.find_elements_by_xpath("""//img[@src]""")
     i = 1
     cw = driver.current_window_handle
-    for elem in elems[i:30:i+2]:    
+    for elem in elems[i:35:i+5]:    
         try:   
             tw = ActionChains(driver).context_click(elem).key_down(Keys.CONTROL).click(elem).perform()
             time.sleep(0.8)
@@ -73,7 +73,7 @@ def review_tabs(result_tab,open_tabs): # this function reviews each tab that is 
         if open_tabs[x] != result_tab:
             driver.switch_to.window(open_tabs[x])
             driver.execute_script("window.scrollTo (0, 540)")
-            time.sleep(1.5)
+            time.sleep(1.2)
             driver.close()
         else:
             driver.close()
