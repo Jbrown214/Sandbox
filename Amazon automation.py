@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import JavascriptException
 from selenium.webdriver.common.action_chains import ActionChains 
 import selenium.webdriver.support.ui as ui
 from selenium.webdriver.common.keys import Keys
@@ -62,7 +63,7 @@ def product_click(): # this function clicks on every other image within the resu
             tw = ActionChains(driver).context_click(elem).key_down(Keys.CONTROL).click(elem).perform()
             time.sleep(0.8)
             i += 2
-        except StaleElementReferenceException:
+        except JavascriptException:
             continue
 
     tabs = driver.window_handles
