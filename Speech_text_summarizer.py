@@ -19,7 +19,9 @@ podcast = sr.AudioFile(r"""C:\\Users\\Jacks\\OneDrive\\Desktop\\Sandbox\\Sandbox
 # podcast = AudioSegment.from_file("joe_rogan.wav", format= "wav")
 # podcast = podcast[:one_eighty_seconds]
 with podcast as source:
-  r.adjust_for_ambient_noise(source)
+  r.adjust_for_ambient_noise(source, duration=5)
+  r.dynamic_energy_threshold = True
+  # r.energy_threshold = 4000  
   audio = r.record(source, duration= 90)
   audio2 = r.record(source, duration= 90)
   try:
