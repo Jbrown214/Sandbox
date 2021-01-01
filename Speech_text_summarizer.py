@@ -22,23 +22,23 @@ with podcast as source:
   r.adjust_for_ambient_noise(source)
   r.dynamic_energy_threshold = True
   # r.energy_threshold = 4000  
-  audio = r.record(source, duration= 90)
-  audio2 = r.record(source, duration= 90)
-  # audio3 = r.record(source, duration= 90)
-  # audio4 = r.record(source, duration= 90)
+  audio = r.record(source, duration=60)
+  audio2 = r.record(source, duration= 60)
+  audio3 = r.record(source, duration= 60)
+  audio4 = r.record(source, duration= 60)
   try:
       text = r.recognize_google(audio)
       text2 = r.recognize_google(audio2)
-      # text3 = r.recognize_google(audio3)
-      # text4 = r.recognize_google(audio4)
+      text3 = r.recognize_google(audio3)
+      text4 = r.recognize_google(audio4)
       print('Audio transcripts ...\n')
       print(text)
       print("\n")
       print(text2)
-      # print("\n")
-      # print(text3)
-      # print("\n")
-      # print(text4)
+      print("\n")
+      print(text3)
+      print("\n")
+      print(text4)
   except:
     print('Sorry.. run again...')
 
