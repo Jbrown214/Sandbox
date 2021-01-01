@@ -19,18 +19,26 @@ podcast = sr.AudioFile(r"""C:\\Users\\Jacks\\OneDrive\\Desktop\\Sandbox\\Sandbox
 # podcast = AudioSegment.from_file("joe_rogan.wav", format= "wav")
 # podcast = podcast[:one_eighty_seconds]
 with podcast as source:
-  r.adjust_for_ambient_noise(source, duration=5)
+  r.adjust_for_ambient_noise(source)
   r.dynamic_energy_threshold = True
   # r.energy_threshold = 4000  
   audio = r.record(source, duration= 90)
   audio2 = r.record(source, duration= 90)
+  # audio3 = r.record(source, duration= 90)
+  # audio4 = r.record(source, duration= 90)
   try:
       text = r.recognize_google(audio)
       text2 = r.recognize_google(audio2)
-      print('Converting audio transcripts into text ...')
+      # text3 = r.recognize_google(audio3)
+      # text4 = r.recognize_google(audio4)
+      print('Audio transcripts ...\n')
       print(text)
       print("\n")
       print(text2)
+      # print("\n")
+      # print(text3)
+      # print("\n")
+      # print(text4)
   except:
     print('Sorry.. run again...')
 
