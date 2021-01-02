@@ -18,29 +18,42 @@ one_eighty_seconds = 180 *1000
 podcast = sr.AudioFile(r"""C:\\Users\\Jacks\\OneDrive\\Desktop\\Sandbox\\Sandbox\\joe_rogan.wav""")
 # podcast = AudioSegment.from_file("joe_rogan.wav", format= "wav")
 # podcast = podcast[:one_eighty_seconds]
+total_len = 132
+podcast_storage = {}
 with podcast as source:
   r.adjust_for_ambient_noise(source)
   r.dynamic_energy_threshold = True
-  # r.energy_threshold = 4000  
-  audio = r.record(source, duration=60)
-  audio2 = r.record(source, duration= 60)
-  audio3 = r.record(source, duration= 60)
-  audio4 = r.record(source, duration= 60)
+  # r.energy_threshold = 400
+  for x in range(0,total_len):
+    audio = r.record(source, duration=60)
+    # audio2 = r.record(source, duration= 60)
+    podcast_storage["audio{0}".format(x)] = audio
+  # audio = r.record(source, duration=60)
+  # audio2 = r.record(source, duration= 60)
+  # # audio3 = r.record(source, duration= 60)
+  # audio4 = r.record(source, duration= 60)
   try:
-      text = r.recognize_google(audio)
-      text2 = r.recognize_google(audio2)
-      text3 = r.recognize_google(audio3)
-      text4 = r.recognize_google(audio4)
-      print('Audio transcripts ...\n')
-      print(text)
-      print("\n")
-      print(text2)
-      print("\n")
-      print(text3)
-      print("\n")
-      print(text4)
+    text = r.recognize_google(podcast_storage["audio120"])
+    print('Audio transcripts ...\n')
+    print(text)
   except:
-    print('Sorry.. run again...')
+    print('Sorry.. run again...') 
+
+#   try:
+# #       text = r.recognize_google(audio)
+# #       text2 = r.recognize_google(audio2)
+# #       # text3 = r.recognize_google(audio3)
+# #       # text4 = r.recognize_google(audio4)
+# #       print('Audio transcripts ...\n')
+# #       print(text)
+# #       print("\n")
+# #       print(text2)
+# #       print("\n")
+# #       # print(text3)
+# #       # print("\n")
+# #       # print(text4)
+# #   except:
+# #     print('Sorry.. run again...')
 
 
 
