@@ -20,11 +20,14 @@ podcast = sr.AudioFile(r"""C:\\Users\\Jacks\\OneDrive\\Desktop\\Sandbox\\Sandbox
 # podcast = podcast[:one_eighty_seconds]
 total_len = 132
 podcast_storage = {}
+text_storage = []
 with podcast as source:
-  r.adjust_for_ambient_noise(source)
-  r.dynamic_energy_threshold = True
+  # r.adjust_for_ambient_noise(source)
+  # r.dynamic_energy_threshold = True
   # r.energy_threshold = 400
   for x in range(0,total_len):
+    r.adjust_for_ambient_noise(source)
+    r.dynamic_energy_threshold = True
     audio = r.record(source, duration=60)
     # audio2 = r.record(source, duration= 60)
     podcast_storage["audio{0}".format(x)] = audio
@@ -33,9 +36,14 @@ with podcast as source:
   # # audio3 = r.record(source, duration= 60)
   # audio4 = r.record(source, duration= 60)
   try:
-    text = r.recognize_google(podcast_storage["audio120"])
+    # text = r.recognize_google(podcast_storage['audio1':'audio3'])
+    for keys, values in podcast_storage.items(): 
+      text = r.recognize_google(podcast_storage[keys])
+      text_storage.append(text)
+    print(len(text_storage))
+
     print('Audio transcripts ...\n')
-    print(text)
+    print(text_storage)
   except:
     print('Sorry.. run again...') 
 
