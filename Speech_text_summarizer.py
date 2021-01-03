@@ -1,4 +1,5 @@
 import os 
+import json
 from pydub import AudioSegment
 import speech_recognition as sr 
 import moviepy.editor as mp
@@ -21,6 +22,8 @@ podcast = sr.AudioFile(r"""C:\\Users\\Jacks\\OneDrive\\Desktop\\Sandbox\\Sandbox
 total_len = 132
 podcast_storage = {}
 text_storage = []
+podcast_text = {}
+# idx = 0
 with podcast as source:
   # r.adjust_for_ambient_noise(source)
   # r.dynamic_energy_threshold = True
@@ -29,23 +32,59 @@ with podcast as source:
     r.adjust_for_ambient_noise(source)
     r.dynamic_energy_threshold = True
     audio = r.record(source, duration=60)
-    # audio2 = r.record(source, duration= 60)
     podcast_storage["audio{0}".format(x)] = audio
-  # audio = r.record(source, duration=60)
-  # audio2 = r.record(source, duration= 60)
-  # # audio3 = r.record(source, duration= 60)
-  # audio4 = r.record(source, duration= 60)
-  try:
-    # text = r.recognize_google(podcast_storage['audio1':'audio3'])
-    for keys, values in podcast_storage.items(): 
-      text = r.recognize_google(podcast_storage[keys])
-      text_storage.append(text)
-    print(len(text_storage))
 
-    print('Audio transcripts ...\n')
-    print(text_storage)
-  except:
-    print('Sorry.. run again...') 
+  # text2 = r.recognize_google(podcast_storage['audio129'])#testing line
+  # print(text2)
+  for keys, values in podcast_storage.items():
+    try: 
+      text = (r.recognize_google(podcast_storage[keys]))
+      # print([x for x in text])
+      # pod_list = list(text)
+      text_storage.append(text)
+      podcast_storage[keys] = text   
+    except sr.UnknownValueError:
+      continue
+    # 
+    # print(text_storage[5])
+    print(len(text_storage))
+    
+# print(podcast_storage['audio30'])
+# y = json.dumps(list(podcast_storage))
+# loaded_json = json.loads(y)
+# print(loaded_json['audio0'])
+
+  # with open('speech to text file.txt', 'w') as f:
+  #   f.write(json.dumps(list(podcast_storage)))
+
+  # # print(podcast_storage["audio88"])
+  # #   # text = r.recognize_google(podcast_storage['audio0'])
+  # #   text2 = r.recognize_google(podcast_storage['audio129'])
+  # # print(text2)
+  # #   # text3 = r.recognize_google(podcast_storage['audio129'])
+  # #   # text4 = r.recognize_google(podcast_storage['audio130'])
+  # #   for keys, values in podcast_storage.items(): 
+  # #     text = r.recognize_google(podcast_storage[keys])
+      
+  #     # text_storage.append(text)
+  # #   # podcast_text_json = json.dumps(podcast_storage)
+  # #   # print(len(text_storage))
+  # except sr.UnknownValueError:
+  #   pass
+
+  # with open('speech to text file.txt', 'w') as f:
+  #   f.write(json.dumps(podcast_storage))
+
+  #   # print('Audio transcripts ...\n')
+  #   # print(text)
+  #   # print("\n")
+  #   # print(text2)
+  #   # print("\n")
+  #   # print(text3)
+  #   # print("\n")
+  #   # print(text4)
+  # # except MemoryError:
+  #   print('Sorry.. run again...') 
 
 #   try:
 # #       text = r.recognize_google(audio)
